@@ -1,0 +1,3771 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta tags  -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+
+    <title>Lineone - Starter Page v1</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+
+    <!-- CSS Assets -->
+    <link rel="stylesheet" href="css/app.css" />
+
+    <!-- Javascript Assets -->
+    <script src="js/app.js" defer></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      /**
+       * THIS SCRIPT REQUIRED FOR PREVENT FLICKERING IN SOME BROWSERS
+       */
+      localStorage.getItem('_x_darkMode_on') === 'true' &&
+        document.documentElement.classList.add('dark')
+    </script>
+
+    <style>
+      .tabHeader {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .audio-layout {
+        display: grid;
+        gap: 50px;
+        margin-top: 2rem;
+        grid-template-columns: 1.8fr 3fr;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 26px;
+        height: 26px;
+        padding: 9px;
+        border-radius: 50%;
+        background-color: white;
+        margin-top: -5px;
+        margin-bottom: -5px;
+      }
+      .bg-purple {
+        background: #7d6ced;
+      }
+      .slider::-webkit-slider-runnable-track {
+        height: 8px;
+        border-radius: 20px;
+        background-color: #7d6ced;
+      }
+
+      .mini-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        padding: 0px !important;
+        border-radius: 50%;
+        background-color: white;
+        margin-top: -6px;
+        margin-bottom: -5px;
+      }
+
+      .mini-slider::-webkit-slider-runnable-track {
+        height: 3px;
+        border-radius: 20px;
+        background-color: #7d6ced;
+      }
+      .mini-slider {
+        margin-bottom: 10px;
+        max-width: 40px;
+      }
+    </style>
+  </head>
+
+  <body x-data x-bind="$store.global.documentBody" class="is-header-blur">
+    <!-- App preloader-->
+    <div
+      class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900"
+    >
+      <div class="app-preloader-inner relative inline-block h-48 w-48"></div>
+    </div>
+
+    <!-- Page Wrapper -->
+    <div
+      id="root"
+      class="min-h-100vh flex grow bg-slate-50 dark:bg-navy-900"
+      x-cloak
+    >
+      <!-- Sidebar -->
+      <div class="sidebar print:hidden">
+        <!-- Main Sidebar -->
+        <div class="main-sidebar">
+          <div
+            class="flex h-full w-full flex-col items-center border-r border-slate-150 bg-white dark:border-navy-700 dark:bg-navy-800"
+          >
+            <!-- Application Logo -->
+            <div class="flex pt-4">
+              <a href="/">
+                <img
+                  class="h-11 w-11 transition-transform duration-500 ease-in-out hover:rotate-[360deg]"
+                  src="images/logo.png"
+                  alt="logo"
+                />
+              </a>
+            </div>
+
+            <!-- Main Sections Links -->
+            <div
+              class="is-scrollbar-hidden flex grow flex-col space-y-4 overflow-y-auto pt-6"
+              style="overflow-x: scroll"
+            >
+              <!-- Dashobards -->
+              <a
+                href="dashboards-crm-analytics.html"
+                class="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary outline-none transition-colors duration-200 hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 dark:text-accent-light dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
+                x-tooltip.placement.right="'Dashboards'"
+              >
+                <svg
+                  class="h-7 w-7"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    fill-opacity=".3"
+                    d="M5 14.059c0-1.01 0-1.514.222-1.945.221-.43.632-.724 1.453-1.31l4.163-2.974c.56-.4.842-.601 1.162-.601.32 0 .601.2 1.162.601l4.163 2.974c.821.586 1.232.88 1.453 1.31.222.43.222.935.222 1.945V19c0 .943 0 1.414-.293 1.707C18.414 21 17.943 21 17 21H7c-.943 0-1.414 0-1.707-.293C5 20.414 5 19.943 5 19v-4.94Z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M3 12.387c0 .267 0 .4.084.441.084.041.19-.04.4-.204l7.288-5.669c.59-.459.885-.688 1.228-.688.343 0 .638.23 1.228.688l7.288 5.669c.21.163.316.245.4.204.084-.04.084-.174.084-.441v-.409c0-.48 0-.72-.102-.928-.101-.208-.291-.355-.67-.65l-7-5.445c-.59-.459-.885-.688-1.228-.688-.343 0-.638.23-1.228.688l-7 5.445c-.379.295-.569.442-.67.65-.102.208-.102.448-.102.928v.409Z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M11.5 15.5h1A1.5 1.5 0 0 1 14 17v3.5h-4V17a1.5 1.5 0 0 1 1.5-1.5Z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M17.5 5h-1a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5Z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="audio.html"
+                class="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary outline-none transition-colors duration-200 hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 dark:text-accent-light dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
+                x-tooltip.placement.right="'audio'"
+              >
+                <svg
+                  width="39"
+                  height="39"
+                  viewBox="0 0 39 39"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.875 17.0625V21.9375"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M9.875 14.625V24.375"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M14.875 8.53125V30.4688"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M19.875 17.0625V21.9375"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M24.875 12.1875V26.8125"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M29.875 8.53125V30.4688"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M34.875 17.0625V21.9375"
+                    stroke="#1A64F5"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+
+            <!-- Bottom Links -->
+            <div class="flex flex-col items-center space-y-3 py-3">
+              <!-- Settings -->
+              <a
+                href="form-layout-5.html"
+                class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+              >
+                <svg
+                  class="h-7 w-7"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-opacity="0.3"
+                    fill="currentColor"
+                    d="M2 12.947v-1.771c0-1.047.85-1.913 1.899-1.913 1.81 0 2.549-1.288 1.64-2.868a1.919 1.919 0 0 1 .699-2.607l1.729-.996c.79-.474 1.81-.192 2.279.603l.11.192c.9 1.58 2.379 1.58 3.288 0l.11-.192c.47-.795 1.49-1.077 2.279-.603l1.73.996a1.92 1.92 0 0 1 .699 2.607c-.91 1.58-.17 2.868 1.639 2.868 1.04 0 1.899.856 1.899 1.912v1.772c0 1.047-.85 1.912-1.9 1.912-1.808 0-2.548 1.288-1.638 2.869.52.915.21 2.083-.7 2.606l-1.729.997c-.79.473-1.81.191-2.279-.604l-.11-.191c-.9-1.58-2.379-1.58-3.288 0l-.11.19c-.47.796-1.49 1.078-2.279.605l-1.73-.997a1.919 1.919 0 0 1-.699-2.606c.91-1.58.17-2.869-1.639-2.869A1.911 1.911 0 0 1 2 12.947Z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M11.995 15.332c1.794 0 3.248-1.464 3.248-3.27 0-1.807-1.454-3.272-3.248-3.272-1.794 0-3.248 1.465-3.248 3.271 0 1.807 1.454 3.271 3.248 3.271Z"
+                  />
+                </svg>
+              </a>
+
+              <!-- Profile -->
+              <div
+                x-data="usePopper({placement:'right-end',offset:12})"
+                @click.outside="isShowPopper && (isShowPopper = false)"
+                class="flex"
+              >
+                <button
+                  @click="isShowPopper = !isShowPopper"
+                  x-ref="popperRef"
+                  class="avatar h-12 w-12"
+                >
+                  <img
+                    class="rounded-full"
+                    src="images/200x200.png"
+                    alt="avatar"
+                  />
+                  <span
+                    class="absolute right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-success dark:border-navy-700"
+                  ></span>
+                </button>
+
+                <div
+                  :class="isShowPopper && 'show'"
+                  class="popper-root fixed"
+                  x-ref="popperRoot"
+                >
+                  <div
+                    class="popper-box w-64 rounded-lg border border-slate-150 bg-white shadow-soft dark:border-navy-600 dark:bg-navy-700"
+                  >
+                    <div
+                      class="flex items-center space-x-4 rounded-t-lg bg-slate-100 py-5 px-4 dark:bg-navy-800"
+                    >
+                      <div class="avatar h-14 w-14">
+                        <img
+                          class="rounded-full"
+                          src="images/200x200.png"
+                          alt="avatar"
+                        />
+                      </div>
+                      <div>
+                        <a
+                          href="#"
+                          class="text-base font-medium text-slate-700 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light"
+                        >
+                          Travis Fuller
+                        </a>
+                        <p class="text-xs text-slate-400 dark:text-navy-300">
+                          Product Designer
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex flex-col pt-2 pb-5">
+                      <a
+                        href="#"
+                        class="group flex items-center space-x-3 py-2 px-4 tracking-wide outline-none transition-all hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-navy-600 dark:focus:bg-navy-600"
+                      >
+                        <div
+                          class="flex h-8 w-8 items-center justify-center rounded-lg bg-warning text-white"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4.5 w-4.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                          </svg>
+                        </div>
+
+                        <div>
+                          <h2
+                            class="font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light"
+                          >
+                            Profile
+                          </h2>
+                          <div
+                            class="text-xs text-slate-400 line-clamp-1 dark:text-navy-300"
+                          >
+                            Your profile setting
+                          </div>
+                        </div>
+                      </a>
+
+                      <div class="mt-3 px-4">
+                        <button
+                          class="btn h-9 w-full space-x-2 bg-primary text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="1.5"
+                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                            />
+                          </svg>
+                          <span>Logout</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Panel -->
+        <div class="sidebar-panel">
+          <div
+            class="flex h-full grow flex-col bg-white pl-[var(--main-sidebar-width)] dark:bg-navy-750"
+          >
+            <!-- Sidebar Panel Header -->
+            <div
+              class="flex h-18 w-full items-center justify-between pl-4 pr-1"
+            >
+              <p
+                class="text-base tracking-wider text-slate-800 dark:text-navy-100"
+              >
+                Layouts
+              </p>
+              <button
+                @click="$store.global.isSidebarExpanded = false"
+                class="btn h-7 w-7 rounded-full p-0 text-primary hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:text-accent-light/80 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 xl:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Sidebar Panel Body -->
+            <div
+              x-data="{expandedItem:'menu-item-3'}"
+              class="h-[calc(100%-4.5rem)] overflow-x-hidden pb-6"
+              x-init="$el._x_simplebar = new SimpleBar($el);"
+            >
+              <ul class="flex flex-1 flex-col px-4 font-inter">
+                <li x-data="accordionItem('menu-item-1')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Onboarding</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-onboarding-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Onboarding 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-onboarding-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Onboarding 2</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-2')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>User Card</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 2</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-3.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 3</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-4.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 4</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-5.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 5</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-6.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 6</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-user-7.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>User Card 7</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-3')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Blog Card</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 2</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-3.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 3</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-4.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 4</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-5.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 5</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-6.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 6</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-7.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 7</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-card-blog-8.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Card 8</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-blog-details.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blog Detail</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-4')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Help</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-help-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Help 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-help-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Help 2</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-help-3.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Help 3</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-5')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Price List</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-price-list-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Price List 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-price-list-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Price List 2</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-price-list-3.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Price List 3</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-6')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Invoice</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-invoice-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Invoice 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-invoice-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Invoice 2</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <div class="my-3 mx-4 h-px bg-slate-200 dark:bg-navy-500"></div>
+
+              <ul class="flex flex-1 flex-col px-4 font-inter">
+                <li x-data="accordionItem('menu-item-7')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Sign In</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-login-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Sign In 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-login-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Sign In 2</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-8')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Sign Up</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-singup-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Sign Up 1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-singup-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Sign Up 2</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <div class="my-3 mx-4 h-px bg-slate-200 dark:bg-navy-500"></div>
+
+              <ul class="flex flex-1 flex-col px-4 font-inter">
+                <li x-data="accordionItem('menu-item-9')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Error</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-404-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 404 v1</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-404-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 404 v2</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-404-3.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 404 v3</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-404-4.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 404 v4</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-401.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 401</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-429.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 429</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-error-500.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Error 500</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li x-data="accordionItem('menu-item-10')">
+                  <a
+                    :class="expanded ? 'text-slate-800 font-semibold dark:text-navy-50' : 'text-slate-600 dark:text-navy-200  hover:text-slate-800  dark:hover:text-navy-50'"
+                    @click="expanded = !expanded"
+                    class="flex items-center justify-between py-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out"
+                    href="javascript:void(0);"
+                  >
+                    <span>Starter</span>
+                    <svg
+                      :class="expanded && 'rotate-90'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-slate-400 transition-transform ease-in-out"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                  <ul x-collapse x-show="expanded">
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-starter-1.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Blurred Header</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-starter-2.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Unblurred Header</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-starter-3.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Centered Links</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-starter-4.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Minimal Sidebar</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-starter-5.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Horizontal Navigation</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        x-data="navLink"
+                        href="pages-starter-6.html"
+                        :class="isActive ? 'font-medium text-primary dark:text-accent-light' : 'text-slate-600 hover:text-slate-900 dark:text-navy-200 dark:hover:text-navy-50'"
+                        class="flex items-center justify-between p-2 text-xs+ tracking-wide outline-none transition-[color,padding-left] duration-300 ease-in-out hover:pl-4"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <div
+                            class="h-1.5 w-1.5 rounded-full border border-current opacity-40"
+                          ></div>
+                          <span>Sideblock</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Header Wrapper-->
+      <nav class="header print:hidden">
+        <!-- App Header  -->
+        <div
+          class="header-container relative flex w-full bg-white dark:bg-navy-700 print:hidden"
+        >
+          <!-- Header Items -->
+          <div class="flex w-full items-center justify-between">
+            <!-- Left: Sidebar Toggle Button -->
+            <div class="h-7 w-7">
+              <button
+                class="only-small menu-toggle ml-0.5 flex h-7 w-7 flex-col justify-center space-y-1.5 text-primary outline-none focus:outline-none dark:text-accent-light/80"
+                :class="$store.global.isSidebarExpanded && 'active'"
+                @click="$store.global.isSidebarExpanded = !$store.global.isSidebarExpanded"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+
+              <!-- Main Searchbar -->
+              <template x-if="$store.breakpoints.smAndUp">
+                <div
+                  class="flex"
+                  x-data="usePopper({placement:'bottom-end',offset:12})"
+                >
+                  <div class="relative mr-4 flex h-8">
+                    <input
+                      placeholder="Search here..."
+                      class="form-input peer h-full rounded-full bg-slate-150 px-4 pl-9 text-xs+ text-slate-800 ring-primary/50 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:text-navy-100 dark:placeholder-navy-300 dark:ring-accent/50 dark:hover:bg-navy-900 dark:focus:bg-navy-900"
+                      :class="isShowPopper ? 'w-80' : 'w-60'"
+                      @focus="isShowPopper= true"
+                      type="text"
+                      x-ref="popperRef"
+                    />
+                    <div
+                      class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4.5 w-4.5 transition-colors duration-200"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M3.316 13.781l.73-.171-.73.171zm0-5.457l.73.171-.73-.171zm15.473 0l.73-.171-.73.171zm0 5.457l.73.171-.73-.171zm-5.008 5.008l-.171-.73.171.73zm-5.457 0l-.171.73.171-.73zm0-15.473l-.171-.73.171.73zm5.457 0l.171-.73-.171.73zM20.47 21.53a.75.75 0 101.06-1.06l-1.06 1.06zM4.046 13.61a11.198 11.198 0 010-5.115l-1.46-.342a12.698 12.698 0 000 5.8l1.46-.343zm14.013-5.115a11.196 11.196 0 010 5.115l1.46.342a12.698 12.698 0 000-5.8l-1.46.343zm-4.45 9.564a11.196 11.196 0 01-5.114 0l-.342 1.46c1.907.448 3.892.448 5.8 0l-.343-1.46zM8.496 4.046a11.198 11.198 0 015.115 0l.342-1.46a12.698 12.698 0 00-5.8 0l.343 1.46zm0 14.013a5.97 5.97 0 01-4.45-4.45l-1.46.343a7.47 7.47 0 005.568 5.568l.342-1.46zm5.457 1.46a7.47 7.47 0 005.568-5.567l-1.46-.342a5.97 5.97 0 01-4.45 4.45l.342 1.46zM13.61 4.046a5.97 5.97 0 014.45 4.45l1.46-.343a7.47 7.47 0 00-5.568-5.567l-.342 1.46zm-5.457-1.46a7.47 7.47 0 00-5.567 5.567l1.46.342a5.97 5.97 0 014.45-4.45l-.343-1.46zm8.652 15.28l3.665 3.664 1.06-1.06-3.665-3.665-1.06 1.06z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Right: Header buttons -->
+            <div class="-mr-1.5 flex items-center space-x-2">
+              <!-- Mobile Search Toggle -->
+              <button
+                @click="$store.global.isSearchbarActive = !$store.global.isSearchbarActive"
+                class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 sm:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5.5 w-5.5 text-slate-500 dark:text-navy-100"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+
+              <!-- Dark Mode Toggle -->
+              <button
+                @click="$store.global.isDarkModeEnabled = !$store.global.isDarkModeEnabled"
+                class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+              >
+                <svg
+                  x-show="$store.global.isDarkModeEnabled"
+                  x-transition:enter="transition-transform duration-200 ease-out absolute origin-top"
+                  x-transition:enter-start="scale-75"
+                  x-transition:enter-end="scale-100 static"
+                  class="h-6 w-6 text-amber-400"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11.75 3.412a.818.818 0 01-.07.917 6.332 6.332 0 00-1.4 3.971c0 3.564 2.98 6.494 6.706 6.494a6.86 6.86 0 002.856-.617.818.818 0 011.1 1.047C19.593 18.614 16.218 21 12.283 21 7.18 21 3 16.973 3 11.956c0-4.563 3.46-8.31 7.925-8.948a.818.818 0 01.826.404z"
+                  />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x-show="!$store.global.isDarkModeEnabled"
+                  x-transition:enter="transition-transform duration-200 ease-out absolute origin-top"
+                  x-transition:enter-start="scale-75"
+                  x-transition:enter-end="scale-100 static"
+                  class="h-6 w-6 text-amber-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <!-- Monochrome Mode Toggle -->
+              <!-- <button
+                @click="$store.global.isMonochromeModeEnabled = !$store.global.isMonochromeModeEnabled"
+                class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+              >
+                <i
+                  class="fa-solid fa-palette bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-lg font-semibold text-transparent"
+                ></i>
+              </button> -->
+
+              <!-- Notification-->
+              <div
+                x-effect="if($store.global.isSearchbarActive) isShowPopper = false"
+                x-data="usePopper({placement:'bottom-end',offset:12})"
+                @click.outside="isShowPopper && (isShowPopper = false)"
+                class="flex"
+              >
+                <button
+                  @click="isShowPopper = !isShowPopper"
+                  x-ref="popperRef"
+                  class="btn relative h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-slate-500 dark:text-navy-100"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M15.375 17.556h-6.75m6.75 0H21l-1.58-1.562a2.254 2.254 0 01-.67-1.596v-3.51a6.612 6.612 0 00-1.238-3.85 6.744 6.744 0 00-3.262-2.437v-.379c0-.59-.237-1.154-.659-1.571A2.265 2.265 0 0012 2c-.597 0-1.169.234-1.591.65a2.208 2.208 0 00-.659 1.572v.38c-2.621.915-4.5 3.385-4.5 6.287v3.51c0 .598-.24 1.172-.67 1.595L3 17.556h12.375zm0 0v1.11c0 .885-.356 1.733-.989 2.358A3.397 3.397 0 0112 22a3.397 3.397 0 01-2.386-.976 3.313 3.313 0 01-.989-2.357v-1.111h6.75z"
+                    />
+                  </svg>
+
+                  <span
+                    class="absolute -top-px -right-px flex h-3 w-3 items-center justify-center"
+                  >
+                    <span
+                      class="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-80"
+                    ></span>
+                    <span
+                      class="inline-flex h-2 w-2 rounded-full bg-secondary"
+                    ></span>
+                  </span>
+                </button>
+                <div
+                  :class="isShowPopper && 'show'"
+                  class="popper-root"
+                  x-ref="popperRoot"
+                >
+                  <div
+                    x-data="{activeTab:'tabAll'}"
+                    class="popper-box mx-4 mt-1 flex max-h-[calc(100vh-6rem)] w-[calc(100vw-2rem)] flex-col rounded-lg border border-slate-150 bg-white shadow-soft dark:border-navy-800 dark:bg-navy-700 dark:shadow-soft-dark sm:m-0 sm:w-80"
+                  >
+                    <div
+                      class="rounded-t-lg bg-slate-100 text-slate-600 dark:bg-navy-800 dark:text-navy-200"
+                    >
+                      <div class="flex items-center justify-between px-4 pt-2">
+                        <div class="flex items-center space-x-2">
+                          <h3
+                            class="font-medium text-slate-700 dark:text-navy-100"
+                          >
+                            Notifications
+                          </h3>
+                          <div
+                            class="badge h-5 rounded-full bg-primary/10 px-1.5 text-primary dark:bg-accent-light/15 dark:text-accent-light"
+                          >
+                            26
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="is-scrollbar-hidden flex shrink-0 overflow-x-auto px-3"
+                      >
+                        <button
+                          @click="activeTab = 'tabAll'"
+                          :class="activeTab === 'tabAll' ? 'border-primary dark:border-accent text-primary dark:text-accent-light' : 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                          class="btn shrink-0 rounded-none border-b-2 px-3.5 py-2.5"
+                        >
+                          <span>All</span>
+                        </button>
+                        <button
+                          @click="activeTab = 'tabAlerts'"
+                          :class="activeTab === 'tabAlerts' ? 'border-primary dark:border-accent text-primary dark:text-accent-light' : 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                          class="btn shrink-0 rounded-none border-b-2 px-3.5 py-2.5"
+                        >
+                          <span>Alerts</span>
+                        </button>
+                        <button
+                          @click="activeTab = 'tabEvents'"
+                          :class="activeTab === 'tabEvents' ? 'border-primary dark:border-accent text-primary dark:text-accent-light' : 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                          class="btn shrink-0 rounded-none border-b-2 px-3.5 py-2.5"
+                        >
+                          <span>Events</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="tab-content flex flex-col overflow-hidden">
+                      <div
+                        x-show="activeTab === 'tabAll'"
+                        x-transition:enter="transition-all duration-300 easy-in-out"
+                        x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                        x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                        class="is-scrollbar-hidden space-y-4 overflow-y-auto px-4 py-4"
+                      >
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-error/10 dark:bg-error/15"
+                          >
+                            <i class="fa fa-history text-error"></i>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              Weekly Report
+                            </p>
+                            <div
+                              class="mt-1 text-xs text-slate-400 line-clamp-1 dark:text-navy-300"
+                            >
+                              The weekly report was uploaded
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        x-show="activeTab === 'tabAlerts'"
+                        x-transition:enter="transition-all duration-300 easy-in-out"
+                        x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                        x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                        class="is-scrollbar-hidden space-y-4 overflow-y-auto px-4 py-4"
+                      >
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-error/10 dark:bg-error/15"
+                          >
+                            <i class="fa fa-history text-error"></i>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              Weekly Report
+                            </p>
+                            <div
+                              class="mt-1 text-xs text-slate-400 line-clamp-1 dark:text-navy-300"
+                            >
+                              The weekly report was uploaded
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        x-show="activeTab === 'tabEvents'"
+                        x-transition:enter="transition-all duration-300 easy-in-out"
+                        x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                        x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                        class="is-scrollbar-hidden space-y-4 overflow-y-auto px-4 py-4"
+                      >
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-info/10 dark:bg-info/15"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-info"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              Mon, June 14, 2021
+                            </p>
+                            <div
+                              class="mt-1 flex text-xs text-slate-400 dark:text-navy-300"
+                            >
+                              <span class="shrink-0">08:00 - 09:00</span>
+                              <div
+                                class="mx-2 my-1 w-px bg-slate-200 dark:bg-navy-500"
+                              ></div>
+
+                              <span class="line-clamp-1">Frontend Conf</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-info/10 dark:bg-info/15"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-info"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              Wed, June 21, 2021
+                            </p>
+                            <div
+                              class="mt-1 flex text-xs text-slate-400 dark:text-navy-300"
+                            >
+                              <span class="shrink-0">16:00 - 20:00</span>
+                              <div
+                                class="mx-2 my-1 w-px bg-slate-200 dark:bg-navy-500"
+                              ></div>
+
+                              <span class="line-clamp-1">UI/UX Conf</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warning/10 dark:bg-warning/15"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-warning"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              THU, May 11, 2021
+                            </p>
+                            <div
+                              class="mt-1 flex text-xs text-slate-400 dark:text-navy-300"
+                            >
+                              <span class="shrink-0">10:00 - 11:30</span>
+                              <div
+                                class="mx-2 my-1 w-px bg-slate-200 dark:bg-navy-500"
+                              ></div>
+                              <span class="line-clamp-1"
+                                >Interview, Konnor Guzman
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-info/10 dark:bg-info/15"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-info"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              Mon, Jul 16, 2021
+                            </p>
+                            <div
+                              class="mt-1 flex text-xs text-slate-400 dark:text-navy-300"
+                            >
+                              <span class="shrink-0">06:00 - 16:00</span>
+                              <div
+                                class="mx-2 my-1 w-px bg-slate-200 dark:bg-navy-500"
+                              ></div>
+
+                              <span class="line-clamp-1">Laravel Conf</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warning/10 dark:bg-warning/15"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-warning"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p
+                              class="font-medium text-slate-600 dark:text-navy-100"
+                            >
+                              Wed, Jun 16, 2021
+                            </p>
+                            <div
+                              class="mt-1 flex text-xs text-slate-400 dark:text-navy-300"
+                            >
+                              <span class="shrink-0">15:30 - 11:30</span>
+                              <div
+                                class="mx-2 my-1 w-px bg-slate-200 dark:bg-navy-500"
+                              ></div>
+                              <span class="line-clamp-1"
+                                >Interview, Jonh Doe
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile Searchbar -->
+      <div
+        x-show="$store.breakpoints.isXs && $store.global.isSearchbarActive"
+        x-transition:enter="easy-out transition-all"
+        x-transition:enter-start="opacity-0 scale-105"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="easy-in transition-all"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[100] flex flex-col bg-white dark:bg-navy-700 sm:hidden"
+      >
+        <div
+          class="flex items-center space-x-2 bg-slate-100 px-3 pt-2 dark:bg-navy-800"
+        >
+          <button
+            class="btn -ml-1.5 h-7 w-7 shrink-0 rounded-full p-0 text-slate-600 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25"
+            @click="$store.global.isSearchbarActive = false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <input
+            x-effect="$store.global.isSearchbarActive && $nextTick(() => $el.focus() );"
+            class="form-input h-8 w-full bg-transparent placeholder-slate-400 dark:placeholder-navy-300"
+            type="text"
+            placeholder="Search here..."
+          />
+        </div>
+      </div>
+
+      <!-- Main Content Wrapper -->
+      <main class="main-content w-full px-[var(--margin-x)] py-8">
+        <!-- Banner -->
+        <div class="card px-4 py-6 sm:px-5">
+          <div class="flex justify-between gap-4">
+            <div class="space-y-2">
+              <p class="text-lg font-medium">+971052465812</p>
+              <p class="space-x-3">
+                <span class="text-primary dark:text-accent-light"
+                  >Called on</span
+                >
+                <span class="text-sm dark:text-navy-300"
+                  >26 April, 2023 06:20 > 26 April, 2023 06:21</span
+                >
+              </p>
+              <p class="space-x-3">
+                <span class="text-primary dark:text-accent-light"
+                  >Duration</span
+                >
+                <span class="text-sm dark:text-navy-300"
+                  >0 hr 1 min 16 sec</span
+                >
+              </p>
+            </div>
+            <div>
+              <button
+                class="btn bg-primary font-medium text-white hover:bg-accent-focus bg-purple px-9 py-4"
+              >
+                Procces
+              </button>
+            </div>
+          </div>
+          <div
+            class="flex justify-center mb-5 card px-4 py-5 bg-slate-200 text-slate-600 dark:bg-navy-800 dark:text-navy-100 rounded-xl"
+            style="margin-top: 1rem"
+          >
+            <div class="flex items-end justify-center" style="gap: 1rem">
+              <div style="margin-bottom: -9px" class="space-x-1.5">
+                <button>
+                  <svg
+                    width="35"
+                    height="35"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20 0C8.95 0 0 8.95 0 20C0 31.05 8.95 40 20 40C31.05 40 40 31.05 40 20C40 8.95 31.05 0 20 0ZM16 29V11L28 20L16 29Z"
+                      fill="#D9D9D9"
+                    />
+                  </svg>
+                </button>
+                <button>
+                  <svg
+                    width="35"
+                    height="35"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40ZM27.5 12.5H12.5V27.5H27.5V12.5Z"
+                      fill="#D9D9D9"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-col gap-2">
+                <svg
+                  width="562"
+                  height="62"
+                  viewBox="0 0 562 62"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M176.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M181.875 27V35"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M186.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M191.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M196.875 25V37"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M201.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M206.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M211.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M216.875 23.25V38.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M221.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M226.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M231.875 19.375V42.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M236.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M241.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M246.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M251.875 27V35"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M256.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M261.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M266.875 25V37"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M271.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M276.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M281.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M286.875 28V34"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M291.875 24.25V37.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M296.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M301.875 26.5V35.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M306.875 24.25V37.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M311.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M351.875 28.5V33.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M356.875 26V36"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M361.875 19.75V42.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M366.875 28.5V33.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M371.875 23.5V38.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M376.875 19.75V42.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M381.875 28.5V33.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M386.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M391.875 23.25V38.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M396.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M401.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M406.875 19.375V42.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M411.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M416.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M316.875 27.75V34.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M321.875 24.5V37.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M326.875 16.375V45.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M331.875 27.75V34.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M336.875 21.25V40.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M341.875 16.375V45.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M346.875 27.75V34.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M422.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M427.875 27V35"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M432.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M437.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M442.875 25V37"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M447.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M452.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M457.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M462.875 23.25V38.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M467.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M472.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M477.875 19.375V42.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M482.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M487.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M492.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M497.875 27V35"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M502.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M507.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M512.875 25V37"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M517.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M522.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M527.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M532.875 28V34"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M537.875 24.25V37.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M542.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M547.875 26.5V35.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M552.875 24.25V37.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M557.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M1.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M6.875 27V35"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M11.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M16.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M21.875 25V37"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M26.875 22V40"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M31.875 29V33"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M36.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M41.875 28V34"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M46.875 24.25V37.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M51.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M56.875 26.5V35.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M61.875 24.25V37.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M66.875 29.5V32.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M106.875 28.5V33.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M111.875 26V36"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M116.875 19.75V42.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M121.875 28.5V33.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M126.875 23.5V38.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M131.875 19.75V42.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M136.875 28.5V33.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M141.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M146.875 23.25V38.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M151.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M156.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M161.875 19.375V42.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M166.875 13.5625V48.4375"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M171.875 27.125V34.875"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M71.875 27.75V34.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M76.875 24.5V37.5"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M81.875 16.375V45.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M86.875 27.75V34.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M91.875 21.25V40.75"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M96.875 16.375V45.625"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M101.875 27.75V34.25"
+                    stroke="white"
+                    stroke-opacity="0.6"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div class="progress h-3 bg-slate-150 dark:bg-navy-500">
+                  <div class="w-5/12 rounded-full bg-primary bg-purple"></div>
+                </div>
+              </div>
+              <p class="text-sm">
+                <span>00:01:30</span> / <span>01:13:50</span>
+              </p>
+              <button style="margin-bottom: -9px">
+                <svg
+                  width="35"
+                  height="35"
+                  viewBox="0 0 35 35"
+                  class="block"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15.8594 28.4375C15.5099 28.4376 15.1697 28.3254 14.8887 28.1176C14.8731 28.1068 14.858 28.0951 14.8436 28.0828L8.59688 22.9688H3.82812C3.393 22.9688 2.9757 22.7959 2.66803 22.4883C2.36035 22.1806 2.1875 21.7633 2.1875 21.3282V13.6719C2.1875 13.2368 2.36035 12.8195 2.66803 12.5118C2.9757 12.2041 3.393 12.0313 3.82812 12.0313H8.59619L14.8422 6.91733C14.8566 6.90495 14.8717 6.89332 14.8873 6.88246C15.1316 6.70276 15.421 6.5943 15.7233 6.56913C16.0255 6.54397 16.3288 6.60309 16.5995 6.73991C16.8702 6.87674 17.0977 7.08593 17.2566 7.34424C17.4156 7.60255 17.4998 7.89986 17.5 8.20317V26.7969C17.5 27.232 17.3271 27.6493 17.0195 27.957C16.7118 28.2647 16.2945 28.4375 15.8594 28.4375Z"
+                    fill="#D9D9D9"
+                  />
+                  <path
+                    d="M21.8748 22.9689C21.6881 22.9688 21.5046 22.921 21.3416 22.83C21.1787 22.739 21.0418 22.6078 20.9438 22.4489C20.8459 22.29 20.7903 22.1087 20.7823 21.9222C20.7742 21.7358 20.814 21.5503 20.8979 21.3836C21.5466 20.0937 21.8754 18.786 21.8754 17.5001C21.8754 16.1753 21.5569 14.9066 20.9013 13.6221C20.7757 13.3644 20.7563 13.0678 20.8472 12.7959C20.9381 12.5241 21.1321 12.2988 21.3874 12.1685C21.6428 12.0383 21.939 12.0135 22.2125 12.0994C22.4859 12.1854 22.7147 12.3752 22.8496 12.6281C23.6651 14.2271 24.0623 15.8212 24.0623 17.5001C24.0623 19.1312 23.6521 20.7684 22.8523 22.3666C22.7612 22.5477 22.6215 22.7 22.4489 22.8063C22.2763 22.9127 22.0775 22.9689 21.8748 22.9689Z"
+                    fill="#D9D9D9"
+                  />
+                  <path
+                    d="M25.156 26.2501C24.964 26.2501 24.7754 26.1996 24.609 26.1036C24.4427 26.0076 24.3046 25.8696 24.2086 25.7033C24.1126 25.537 24.062 25.3484 24.062 25.1564C24.062 24.9644 24.1125 24.7757 24.2085 24.6094C25.5012 22.3597 26.2498 20.4744 26.2498 17.5001C26.2498 14.4806 25.5026 12.6083 24.2113 10.3948C24.0697 10.1445 24.0323 9.84846 24.1074 9.57083C24.1824 9.29319 24.3638 9.05629 24.6122 8.9114C24.8606 8.76651 25.1561 8.7253 25.4347 8.79669C25.7133 8.86808 25.9526 9.04633 26.1007 9.29284C27.5431 11.7654 28.4373 14.0008 28.4373 17.5001C28.4373 20.9474 27.5445 23.1937 26.1042 25.7032C26.0081 25.8696 25.8699 26.0078 25.7034 26.1038C25.537 26.1998 25.3482 26.2502 25.156 26.2501Z"
+                    fill="#D9D9D9"
+                  />
+                  <path
+                    d="M28.4376 29.5313C28.2407 29.5312 28.0474 29.4779 27.8782 29.377C27.7091 29.2761 27.5703 29.1314 27.4765 28.9582C27.3828 28.785 27.3376 28.5897 27.3456 28.3929C27.3537 28.1961 27.4147 28.0051 27.5223 27.8401C29.3844 24.9834 30.6251 22.1321 30.6251 17.5001C30.6251 12.9542 29.3824 10.0749 27.5155 7.15116C27.4382 7.02997 27.3855 6.89474 27.3605 6.7532C27.3354 6.61165 27.3385 6.46656 27.3696 6.32621C27.4006 6.18586 27.459 6.053 27.5414 5.93522C27.6238 5.81743 27.7286 5.71702 27.8497 5.63973C27.9709 5.56244 28.1062 5.50977 28.2477 5.48474C28.3892 5.45971 28.5343 5.4628 28.6747 5.49384C28.815 5.52488 28.9479 5.58327 29.0657 5.66565C29.1835 5.74804 29.2839 5.85282 29.3612 5.97401C31.4325 9.22108 32.8126 12.4237 32.8126 17.5001C32.8126 21.9264 31.8105 25.2678 29.3536 29.035C29.2543 29.1874 29.1185 29.3126 28.9585 29.3993C28.7986 29.4859 28.6195 29.5313 28.4376 29.5313Z"
+                    fill="#D9D9D9"
+                  />
+                </svg>
+              </button>
+              <div>
+                <label class="block">
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="50"
+                    class="slider"
+                    style="max-width: 88px"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="audio-layout py-3">
+          <div class="space-y-3">
+            <div class="card px-9 py-3 rounded-lg w-full">
+              <p class="text-center py-4">25 April, 2023 09:40</p>
+              <div
+                class="flex items-center justify-center px-6 py-5 rounded-lg dark:bg-navy-800"
+                style="gap: 0.4rem"
+              >
+                <div class="flex gap-2">
+                  <button>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 0C8.95 0 0 8.95 0 20C0 31.05 8.95 40 20 40C31.05 40 40 31.05 40 20C40 8.95 31.05 0 20 0ZM16 29V11L28 20L16 29Z"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </button>
+                  <button>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40ZM27.5 12.5H12.5V27.5H27.5V12.5Z"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="flex flex-col gap-2 w-full flex-1">
+                  <div
+                    class="progress h-2 bg-slate-150 dark:bg-navy-500"
+                    style="height: 4px"
+                  >
+                    <div class="w-5/12 rounded-full bg-primary bg-purple"></div>
+                  </div>
+                </div>
+                <p class="whitespace-nowrap" style="font-size: 5.02342px">
+                  <span>00:01:30</span> / <span>01:13:50</span>
+                </p>
+                <button>
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 35 35"
+                    class="block"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15.8594 28.4375C15.5099 28.4376 15.1697 28.3254 14.8887 28.1176C14.8731 28.1068 14.858 28.0951 14.8436 28.0828L8.59688 22.9688H3.82812C3.393 22.9688 2.9757 22.7959 2.66803 22.4883C2.36035 22.1806 2.1875 21.7633 2.1875 21.3282V13.6719C2.1875 13.2368 2.36035 12.8195 2.66803 12.5118C2.9757 12.2041 3.393 12.0313 3.82812 12.0313H8.59619L14.8422 6.91733C14.8566 6.90495 14.8717 6.89332 14.8873 6.88246C15.1316 6.70276 15.421 6.5943 15.7233 6.56913C16.0255 6.54397 16.3288 6.60309 16.5995 6.73991C16.8702 6.87674 17.0977 7.08593 17.2566 7.34424C17.4156 7.60255 17.4998 7.89986 17.5 8.20317V26.7969C17.5 27.232 17.3271 27.6493 17.0195 27.957C16.7118 28.2647 16.2945 28.4375 15.8594 28.4375Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M21.8748 22.9689C21.6881 22.9688 21.5046 22.921 21.3416 22.83C21.1787 22.739 21.0418 22.6078 20.9438 22.4489C20.8459 22.29 20.7903 22.1087 20.7823 21.9222C20.7742 21.7358 20.814 21.5503 20.8979 21.3836C21.5466 20.0937 21.8754 18.786 21.8754 17.5001C21.8754 16.1753 21.5569 14.9066 20.9013 13.6221C20.7757 13.3644 20.7563 13.0678 20.8472 12.7959C20.9381 12.5241 21.1321 12.2988 21.3874 12.1685C21.6428 12.0383 21.939 12.0135 22.2125 12.0994C22.4859 12.1854 22.7147 12.3752 22.8496 12.6281C23.6651 14.2271 24.0623 15.8212 24.0623 17.5001C24.0623 19.1312 23.6521 20.7684 22.8523 22.3666C22.7612 22.5477 22.6215 22.7 22.4489 22.8063C22.2763 22.9127 22.0775 22.9689 21.8748 22.9689Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M25.156 26.2501C24.964 26.2501 24.7754 26.1996 24.609 26.1036C24.4427 26.0076 24.3046 25.8696 24.2086 25.7033C24.1126 25.537 24.062 25.3484 24.062 25.1564C24.062 24.9644 24.1125 24.7757 24.2085 24.6094C25.5012 22.3597 26.2498 20.4744 26.2498 17.5001C26.2498 14.4806 25.5026 12.6083 24.2113 10.3948C24.0697 10.1445 24.0323 9.84846 24.1074 9.57083C24.1824 9.29319 24.3638 9.05629 24.6122 8.9114C24.8606 8.76651 25.1561 8.7253 25.4347 8.79669C25.7133 8.86808 25.9526 9.04633 26.1007 9.29284C27.5431 11.7654 28.4373 14.0008 28.4373 17.5001C28.4373 20.9474 27.5445 23.1937 26.1042 25.7032C26.0081 25.8696 25.8699 26.0078 25.7034 26.1038C25.537 26.1998 25.3482 26.2502 25.156 26.2501Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M28.4376 29.5313C28.2407 29.5312 28.0474 29.4779 27.8782 29.377C27.7091 29.2761 27.5703 29.1314 27.4765 28.9582C27.3828 28.785 27.3376 28.5897 27.3456 28.3929C27.3537 28.1961 27.4147 28.0051 27.5223 27.8401C29.3844 24.9834 30.6251 22.1321 30.6251 17.5001C30.6251 12.9542 29.3824 10.0749 27.5155 7.15116C27.4382 7.02997 27.3855 6.89474 27.3605 6.7532C27.3354 6.61165 27.3385 6.46656 27.3696 6.32621C27.4006 6.18586 27.459 6.053 27.5414 5.93522C27.6238 5.81743 27.7286 5.71702 27.8497 5.63973C27.9709 5.56244 28.1062 5.50977 28.2477 5.48474C28.3892 5.45971 28.5343 5.4628 28.6747 5.49384C28.815 5.52488 28.9479 5.58327 29.0657 5.66565C29.1835 5.74804 29.2839 5.85282 29.3612 5.97401C31.4325 9.22108 32.8126 12.4237 32.8126 17.5001C32.8126 21.9264 31.8105 25.2678 29.3536 29.035C29.2543 29.1874 29.1185 29.3126 28.9585 29.3993C28.7986 29.4859 28.6195 29.5313 28.4376 29.5313Z"
+                      fill="#D9D9D9"
+                    />
+                  </svg>
+                </button>
+                <div>
+                  <label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="2"
+                      class="mini-slider"
+                      style="max-width: 40px"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="card px-9 py-3 rounded-lg w-full">
+              <p class="text-center py-4">25 April, 2023 09:40</p>
+              <div
+                class="flex items-center justify-center px-6 py-5 rounded-lg dark:bg-navy-800"
+                style="gap: 0.4rem"
+              >
+                <div class="flex gap-2">
+                  <button>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 0C8.95 0 0 8.95 0 20C0 31.05 8.95 40 20 40C31.05 40 40 31.05 40 20C40 8.95 31.05 0 20 0ZM16 29V11L28 20L16 29Z"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </button>
+                  <button>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40ZM27.5 12.5H12.5V27.5H27.5V12.5Z"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="flex flex-col gap-2 w-full flex-1">
+                  <div
+                    class="progress bg-slate-150 dark:bg-navy-500"
+                    style="height: 4px"
+                  >
+                    <div
+                      class="w-5/12 rounded-full bg-primary dark:bg-accent"
+                    ></div>
+                  </div>
+                </div>
+                <p class="whitespace-nowrap" style="font-size: 5.02342px">
+                  <span>00:01:30</span> / <span>01:13:50</span>
+                </p>
+                <button>
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 35 35"
+                    class="block"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15.8594 28.4375C15.5099 28.4376 15.1697 28.3254 14.8887 28.1176C14.8731 28.1068 14.858 28.0951 14.8436 28.0828L8.59688 22.9688H3.82812C3.393 22.9688 2.9757 22.7959 2.66803 22.4883C2.36035 22.1806 2.1875 21.7633 2.1875 21.3282V13.6719C2.1875 13.2368 2.36035 12.8195 2.66803 12.5118C2.9757 12.2041 3.393 12.0313 3.82812 12.0313H8.59619L14.8422 6.91733C14.8566 6.90495 14.8717 6.89332 14.8873 6.88246C15.1316 6.70276 15.421 6.5943 15.7233 6.56913C16.0255 6.54397 16.3288 6.60309 16.5995 6.73991C16.8702 6.87674 17.0977 7.08593 17.2566 7.34424C17.4156 7.60255 17.4998 7.89986 17.5 8.20317V26.7969C17.5 27.232 17.3271 27.6493 17.0195 27.957C16.7118 28.2647 16.2945 28.4375 15.8594 28.4375Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M21.8748 22.9689C21.6881 22.9688 21.5046 22.921 21.3416 22.83C21.1787 22.739 21.0418 22.6078 20.9438 22.4489C20.8459 22.29 20.7903 22.1087 20.7823 21.9222C20.7742 21.7358 20.814 21.5503 20.8979 21.3836C21.5466 20.0937 21.8754 18.786 21.8754 17.5001C21.8754 16.1753 21.5569 14.9066 20.9013 13.6221C20.7757 13.3644 20.7563 13.0678 20.8472 12.7959C20.9381 12.5241 21.1321 12.2988 21.3874 12.1685C21.6428 12.0383 21.939 12.0135 22.2125 12.0994C22.4859 12.1854 22.7147 12.3752 22.8496 12.6281C23.6651 14.2271 24.0623 15.8212 24.0623 17.5001C24.0623 19.1312 23.6521 20.7684 22.8523 22.3666C22.7612 22.5477 22.6215 22.7 22.4489 22.8063C22.2763 22.9127 22.0775 22.9689 21.8748 22.9689Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M25.156 26.2501C24.964 26.2501 24.7754 26.1996 24.609 26.1036C24.4427 26.0076 24.3046 25.8696 24.2086 25.7033C24.1126 25.537 24.062 25.3484 24.062 25.1564C24.062 24.9644 24.1125 24.7757 24.2085 24.6094C25.5012 22.3597 26.2498 20.4744 26.2498 17.5001C26.2498 14.4806 25.5026 12.6083 24.2113 10.3948C24.0697 10.1445 24.0323 9.84846 24.1074 9.57083C24.1824 9.29319 24.3638 9.05629 24.6122 8.9114C24.8606 8.76651 25.1561 8.7253 25.4347 8.79669C25.7133 8.86808 25.9526 9.04633 26.1007 9.29284C27.5431 11.7654 28.4373 14.0008 28.4373 17.5001C28.4373 20.9474 27.5445 23.1937 26.1042 25.7032C26.0081 25.8696 25.8699 26.0078 25.7034 26.1038C25.537 26.1998 25.3482 26.2502 25.156 26.2501Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M28.4376 29.5313C28.2407 29.5312 28.0474 29.4779 27.8782 29.377C27.7091 29.2761 27.5703 29.1314 27.4765 28.9582C27.3828 28.785 27.3376 28.5897 27.3456 28.3929C27.3537 28.1961 27.4147 28.0051 27.5223 27.8401C29.3844 24.9834 30.6251 22.1321 30.6251 17.5001C30.6251 12.9542 29.3824 10.0749 27.5155 7.15116C27.4382 7.02997 27.3855 6.89474 27.3605 6.7532C27.3354 6.61165 27.3385 6.46656 27.3696 6.32621C27.4006 6.18586 27.459 6.053 27.5414 5.93522C27.6238 5.81743 27.7286 5.71702 27.8497 5.63973C27.9709 5.56244 28.1062 5.50977 28.2477 5.48474C28.3892 5.45971 28.5343 5.4628 28.6747 5.49384C28.815 5.52488 28.9479 5.58327 29.0657 5.66565C29.1835 5.74804 29.2839 5.85282 29.3612 5.97401C31.4325 9.22108 32.8126 12.4237 32.8126 17.5001C32.8126 21.9264 31.8105 25.2678 29.3536 29.035C29.2543 29.1874 29.1185 29.3126 28.9585 29.3993C28.7986 29.4859 28.6195 29.5313 28.4376 29.5313Z"
+                      fill="#D9D9D9"
+                    />
+                  </svg>
+                </button>
+                <div>
+                  <label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="2"
+                      class="mini-slider"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="card px-9 py-3 rounded-lg w-full">
+              <p class="text-center py-4">25 April, 2023 09:40</p>
+              <div
+                class="flex items-center justify-center px-6 py-5 rounded-lg dark:bg-navy-800"
+                style="gap: 0.4rem"
+              >
+                <div class="flex gap-2">
+                  <button>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 0C8.95 0 0 8.95 0 20C0 31.05 8.95 40 20 40C31.05 40 40 31.05 40 20C40 8.95 31.05 0 20 0ZM16 29V11L28 20L16 29Z"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </button>
+                  <button>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40ZM27.5 12.5H12.5V27.5H27.5V12.5Z"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="flex flex-col gap-2 w-full flex-1">
+                  <div
+                    class="progress bg-slate-150 dark:bg-navy-500"
+                    style="height: 4px"
+                  >
+                    <div
+                      class="w-5/12 rounded-full bg-primary dark:bg-accent"
+                    ></div>
+                  </div>
+                </div>
+                <p class="whitespace-nowrap" style="font-size: 5.02342px">
+                  <span>00:01:30</span> / <span>01:13:50</span>
+                </p>
+                <button>
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 35 35"
+                    class="block"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15.8594 28.4375C15.5099 28.4376 15.1697 28.3254 14.8887 28.1176C14.8731 28.1068 14.858 28.0951 14.8436 28.0828L8.59688 22.9688H3.82812C3.393 22.9688 2.9757 22.7959 2.66803 22.4883C2.36035 22.1806 2.1875 21.7633 2.1875 21.3282V13.6719C2.1875 13.2368 2.36035 12.8195 2.66803 12.5118C2.9757 12.2041 3.393 12.0313 3.82812 12.0313H8.59619L14.8422 6.91733C14.8566 6.90495 14.8717 6.89332 14.8873 6.88246C15.1316 6.70276 15.421 6.5943 15.7233 6.56913C16.0255 6.54397 16.3288 6.60309 16.5995 6.73991C16.8702 6.87674 17.0977 7.08593 17.2566 7.34424C17.4156 7.60255 17.4998 7.89986 17.5 8.20317V26.7969C17.5 27.232 17.3271 27.6493 17.0195 27.957C16.7118 28.2647 16.2945 28.4375 15.8594 28.4375Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M21.8748 22.9689C21.6881 22.9688 21.5046 22.921 21.3416 22.83C21.1787 22.739 21.0418 22.6078 20.9438 22.4489C20.8459 22.29 20.7903 22.1087 20.7823 21.9222C20.7742 21.7358 20.814 21.5503 20.8979 21.3836C21.5466 20.0937 21.8754 18.786 21.8754 17.5001C21.8754 16.1753 21.5569 14.9066 20.9013 13.6221C20.7757 13.3644 20.7563 13.0678 20.8472 12.7959C20.9381 12.5241 21.1321 12.2988 21.3874 12.1685C21.6428 12.0383 21.939 12.0135 22.2125 12.0994C22.4859 12.1854 22.7147 12.3752 22.8496 12.6281C23.6651 14.2271 24.0623 15.8212 24.0623 17.5001C24.0623 19.1312 23.6521 20.7684 22.8523 22.3666C22.7612 22.5477 22.6215 22.7 22.4489 22.8063C22.2763 22.9127 22.0775 22.9689 21.8748 22.9689Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M25.156 26.2501C24.964 26.2501 24.7754 26.1996 24.609 26.1036C24.4427 26.0076 24.3046 25.8696 24.2086 25.7033C24.1126 25.537 24.062 25.3484 24.062 25.1564C24.062 24.9644 24.1125 24.7757 24.2085 24.6094C25.5012 22.3597 26.2498 20.4744 26.2498 17.5001C26.2498 14.4806 25.5026 12.6083 24.2113 10.3948C24.0697 10.1445 24.0323 9.84846 24.1074 9.57083C24.1824 9.29319 24.3638 9.05629 24.6122 8.9114C24.8606 8.76651 25.1561 8.7253 25.4347 8.79669C25.7133 8.86808 25.9526 9.04633 26.1007 9.29284C27.5431 11.7654 28.4373 14.0008 28.4373 17.5001C28.4373 20.9474 27.5445 23.1937 26.1042 25.7032C26.0081 25.8696 25.8699 26.0078 25.7034 26.1038C25.537 26.1998 25.3482 26.2502 25.156 26.2501Z"
+                      fill="#D9D9D9"
+                    />
+                    <path
+                      d="M28.4376 29.5313C28.2407 29.5312 28.0474 29.4779 27.8782 29.377C27.7091 29.2761 27.5703 29.1314 27.4765 28.9582C27.3828 28.785 27.3376 28.5897 27.3456 28.3929C27.3537 28.1961 27.4147 28.0051 27.5223 27.8401C29.3844 24.9834 30.6251 22.1321 30.6251 17.5001C30.6251 12.9542 29.3824 10.0749 27.5155 7.15116C27.4382 7.02997 27.3855 6.89474 27.3605 6.7532C27.3354 6.61165 27.3385 6.46656 27.3696 6.32621C27.4006 6.18586 27.459 6.053 27.5414 5.93522C27.6238 5.81743 27.7286 5.71702 27.8497 5.63973C27.9709 5.56244 28.1062 5.50977 28.2477 5.48474C28.3892 5.45971 28.5343 5.4628 28.6747 5.49384C28.815 5.52488 28.9479 5.58327 29.0657 5.66565C29.1835 5.74804 29.2839 5.85282 29.3612 5.97401C31.4325 9.22108 32.8126 12.4237 32.8126 17.5001C32.8126 21.9264 31.8105 25.2678 29.3536 29.035C29.2543 29.1874 29.1185 29.3126 28.9585 29.3993C28.7986 29.4859 28.6195 29.5313 28.4376 29.5313Z"
+                      fill="#D9D9D9"
+                    />
+                  </svg>
+                </button>
+                <div>
+                  <label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="2"
+                      class="mini-slider"
+                      style="max-width: 40px"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              x-data="{activeTab:'tabContact'}"
+              class="tabs flex flex-col card"
+            >
+              <div
+                class="is-scrollbar-hidden card border dark:border-navy-400 tabHeader"
+                style="overflow-x: scroll"
+              >
+                <div class="tabs-list flex justify-center py-2">
+                  <button
+                    @click="activeTab = 'tabContact'"
+                    :class="activeTab === 'tabContact' ? 'bg-white shadow dark:bg-navy-500 dark:text-navy-100' : 'hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                    class="btn shrink-0 px-4 py-3 font-medium rounded-2xl gap-2"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20.1668 15.5093V18.2593C20.1678 18.5146 20.1156 18.7673 20.0133 19.0012C19.911 19.2351 19.761 19.4451 19.5729 19.6177C19.3848 19.7902 19.1627 19.9216 18.9208 20.0034C18.679 20.0852 18.4227 20.1156 18.1685 20.0926C15.3477 19.7861 12.6382 18.8222 10.2576 17.2784C8.04282 15.8711 6.16503 13.9933 4.75764 11.7784C3.20846 9.38705 2.24436 6.66435 1.94348 3.83094C1.92057 3.57745 1.95069 3.32197 2.03193 3.08076C2.11317 2.83956 2.24375 2.61791 2.41534 2.42993C2.58694 2.24195 2.7958 2.09176 3.02862 1.98892C3.26144 1.88608 3.51312 1.83285 3.76764 1.83261H6.51764C6.96251 1.82823 7.39378 1.98576 7.73109 2.27585C8.0684 2.56593 8.28871 2.96877 8.35098 3.40928C8.46705 4.28934 8.6823 5.15344 8.99264 5.98511C9.11597 6.31321 9.14267 6.66978 9.06956 7.01258C8.99645 7.35538 8.8266 7.67004 8.58014 7.91928L7.41598 9.08344C8.7209 11.3784 10.6211 13.2785 12.916 14.5834L14.0801 13.4193C14.3294 13.1728 14.644 13.003 14.9868 12.9299C15.3296 12.8568 15.6862 12.8834 16.0143 13.0068C16.846 13.3171 17.7101 13.5324 18.5901 13.6484C19.0354 13.7113 19.4421 13.9355 19.7328 14.2786C20.0235 14.6217 20.178 15.0597 20.1668 15.5093Z"
+                        stroke="#A7A7A7"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+
+                    Contacts
+                  </button>
+                  <button
+                    @click="activeTab = 'tabSentiment'"
+                    :class="activeTab === 'tabSentiment' ? 'bg-white shadow dark:bg-navy-500 dark:text-navy-100' : 'hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                    class="btn shrink-0 px-4 py-3 font-medium rounded-2xl gap-2"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_50_2464)">
+                        <path
+                          d="M11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25Z"
+                          stroke="#A7A7A7"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M7.90625 10.3125C8.47579 10.3125 8.9375 9.85079 8.9375 9.28125C8.9375 8.71171 8.47579 8.25 7.90625 8.25C7.33671 8.25 6.875 8.71171 6.875 9.28125C6.875 9.85079 7.33671 10.3125 7.90625 10.3125Z"
+                          fill="#A7A7A7"
+                        />
+                        <path
+                          d="M14.0938 10.3125C14.6633 10.3125 15.125 9.85079 15.125 9.28125C15.125 8.71171 14.6633 8.25 14.0938 8.25C13.5242 8.25 13.0625 8.71171 13.0625 9.28125C13.0625 9.85079 13.5242 10.3125 14.0938 10.3125Z"
+                          fill="#A7A7A7"
+                        />
+                        <path
+                          d="M14.5748 13.0625C14.2114 13.6886 13.6899 14.2083 13.0625 14.5696C12.4351 14.9309 11.7238 15.121 10.9998 15.121C10.2758 15.121 9.56455 14.9309 8.93716 14.5696C8.30976 14.2083 7.78824 13.6886 7.4248 13.0625"
+                          stroke="#A7A7A7"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath15 id="clip0_50_2464">
+                          <rect width="15" height="22" fill="white" />
+                        </clipPath15>
+                      </defs>
+                    </svg>
+
+                    Sentiment
+                  </button>
+                  <button
+                    @click="activeTab = 'tabReports'"
+                    :class="activeTab === 'tabReports' ? 'bg-white shadow dark:bg-navy-500 dark:text-navy-100' : 'hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                    class="btn shrink-0 px-4 py-3 font-medium rounded-2xl gap-2"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_50_2472)">
+                        <path
+                          d="M13.0877 2.72545H8.9126V0.549805H13.0877V2.72545Z"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-miterlimit="6.2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M19.4855 21.4499H2.51465V2.72559H19.4855V21.4499Z"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-miterlimit="6.2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M16.3474 4.22264H5.65283V3.4043H16.3474V4.22264Z"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-miterlimit="6.2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6.30859 10.959H15.7703"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6.30859 7.55811H15.7703"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6.30859 14.3599H15.7703"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6.22998 17.7607H15.6917"
+                          stroke="#A7A7A7"
+                          stroke-width="1.18919"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath15 id="clip0_50_2472">
+                          <rect width="15" height="22" fill="white" />
+                        </clipPath15>
+                      </defs>
+                    </svg>
+
+                    Reports
+                  </button>
+                  <button
+                    @click="activeTab = 'tabSearch'"
+                    :class="activeTab === 'tabSearch' ? 'bg-white shadow dark:bg-navy-500 dark:text-navy-100' : 'hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                    class="btn shrink-0 px-4 py-3 font-medium rounded-2xl gap-2"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.5418 19.2499C15.3513 19.2499 19.2502 15.3511 19.2502 10.5416C19.2502 5.73211 15.3513 1.83325 10.5418 1.83325C5.73235 1.83325 1.8335 5.73211 1.8335 10.5416C1.8335 15.3511 5.73235 19.2499 10.5418 19.2499Z"
+                        stroke="#A7A7A7"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M20.1668 20.1666L18.3335 18.3333"
+                        stroke="#A7A7A7"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+
+                    Search
+                  </button>
+                  <button
+                    @click="activeTab = 'tabQuality'"
+                    :class="activeTab === 'tabQuality' ? 'bg-white shadow dark:bg-navy-500 dark:text-navy-100' : 'hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                    class="btn shrink-0 px-4 py-3 font-medium rounded-2xl gap-2"
+                  >
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.45432 12.9607L3.60182 18.1032C3.54682 18.4424 3.68432 18.7907 3.96848 18.9923C4.25265 19.194 4.61932 19.2215 4.93098 19.0657L10.0002 16.3982L15.0785 19.0657C15.2068 19.1298 15.3535 19.1665 15.5002 19.1665C15.6927 19.1665 15.876 19.1115 16.041 18.9923C16.3252 18.7907 16.4627 18.4424 16.4077 18.1032L15.5552 12.9607L19.0202 7.76318C19.2035 7.47902 19.2218 7.12152 19.066 6.81902C18.9102 6.51652 18.5893 6.33318 18.2502 6.33318H16.4168C15.9127 6.33318 15.5002 6.74568 15.5002 7.24985C15.5002 7.75402 15.9127 8.16652 16.4168 8.16652H16.536L13.8227 12.2457C13.6943 12.4382 13.6393 12.6765 13.6852 12.9057L14.2993 16.5815L10.431 14.5557C10.1652 14.4182 9.84432 14.4182 9.57848 14.5557L5.71015 16.5815L6.32432 12.9057C6.36098 12.6765 6.31515 12.4382 6.18682 12.2457L3.46432 8.16652H7.25015C7.59848 8.16652 7.91015 7.97402 8.06598 7.66235L9.87182 4.05068L10.156 4.82068C10.3302 5.29735 10.8618 5.53568 11.3293 5.36152C11.806 5.18735 12.0443 4.65568 11.8701 4.18818L10.8527 1.43818C10.7335 1.08985 10.4127 0.851518 10.046 0.833184C9.67015 0.814851 9.34015 1.01652 9.17515 1.33735L6.68182 6.33318H1.75015C1.41098 6.33318 1.09932 6.51652 0.943484 6.81902C0.787651 7.12152 0.796818 7.47902 0.989318 7.75402L4.45432 12.9607Z"
+                        fill="#A7A7A7"
+                      />
+                    </svg>
+
+                    Quality
+                  </button>
+                </div>
+              </div>
+              <div class="tab-content py-3 px-3" style="min-height: 300px">
+                <div
+                  x-show="activeTab === 'tabContact'"
+                  x-transition:enter="transition-all duration-500 easy-in-out"
+                  x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                  x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                >
+                  <!-- <div class="flex justify-center items-center h-16">
+                    <p class="text-center">No Data Available</p>
+                  </div> -->
+                  <div class="flex gap-3 flex-col px-4">
+                    <div
+                      class="border rounded-xl px-3 py-3 dark:border-navy-500 flex gap-4 items-center"
+                    >
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M20 3.75C11.0234 3.75 3.75 11.0234 3.75 20C3.75 28.9766 11.0234 36.25 20 36.25C28.9766 36.25 36.25 28.9766 36.25 20C36.25 11.0234 28.9766 3.75 20 3.75ZM20 5.10156C28.2109 5.10156 34.8984 11.7812 34.8984 20C34.8984 23.6328 33.5938 26.9609 31.4297 29.5469C29.8672 28.9063 26.2812 27.6641 24.1719 27.0391C23.9844 26.9844 23.9609 26.9688 23.9609 26.2031C23.9609 25.5703 24.2188 24.9297 24.4766 24.3828C24.7578 23.7969 25.0781 22.8047 25.1953 21.9141C25.5234 21.5312 25.9766 20.7812 26.2578 19.3438C26.5078 18.0781 26.3906 17.6172 26.2266 17.1875C26.2109 17.1406 26.1875 17.0938 26.1797 17.0547C26.1172 16.7578 26.2031 15.2188 26.4219 14.0234C26.5703 13.2031 26.3828 11.4609 25.2578 10.0156C24.5469 9.10156 23.1797 7.98438 20.6875 7.82812H19.3203C16.8672 7.98438 15.5078 9.10156 14.7891 10.0156C13.6562 11.4609 13.4688 13.2031 13.6172 14.0234C13.8359 15.2188 13.9219 16.7578 13.8594 17.0547C13.8437 17.1094 13.8281 17.1484 13.8125 17.1953C13.6484 17.625 13.5234 18.0859 13.7812 19.3516C14.0703 20.7891 14.5156 21.5391 14.8438 21.9219C14.9609 22.8125 15.2891 23.7969 15.5625 24.3906C15.7656 24.8203 15.8594 25.4062 15.8594 26.2344C15.8594 27.0078 15.8281 27.0156 15.6562 27.0703C13.4609 27.7188 9.98438 28.9688 8.59375 29.5703C6.41406 26.9766 5.10156 23.6406 5.10156 20C5.10156 11.7891 11.7891 5.10156 20 5.10156Z"
+                          fill="#A7A7A7"
+                        />
+                      </svg>
+                      <span>Amine Warh</span>
+                    </div>
+                    <div
+                      class="border rounded-xl px-3 py-3 dark:border-navy-500 flex gap-4 items-center"
+                    >
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_130_644)">
+                          <path
+                            d="M39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5C30.7696 0.5 39.5 9.23045 39.5 20Z"
+                            fill="#23324D"
+                            stroke="#A7A7A7"
+                          />
+                          <path
+                            d="M20 11.875C17.25 11.875 15 14.125 15 16.875C15 19.625 17.25 21.875 20 21.875C22.75 21.875 25 19.625 25 16.875C25 14.125 22.75 11.875 20 11.875Z"
+                            fill="#A7A7A7"
+                          />
+                          <path
+                            d="M20 7.5C14.8125 7.5 10.625 11.6875 10.625 16.875C10.625 21.5625 18.3125 30.5625 19.7812 32.2188C19.9062 32.375 20.125 32.375 20.25 32.2188C21.6875 30.5625 29.375 21.5625 29.375 16.875C29.375 11.6875 25.1875 7.5 20 7.5ZM20 23.125C16.5625 23.125 13.75 20.3125 13.75 16.875C13.75 13.4375 16.5625 10.625 20 10.625C23.4375 10.625 26.25 13.4375 26.25 16.875C26.25 20.3125 23.4375 23.125 20 23.125Z"
+                            fill="#A7A7A7"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_130_644">
+                            <rect width="40" height="40" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+
+                      <span>Bloc A0 121 Bohlal, Rabat, Morocco</span>
+                    </div>
+                    <div
+                      class="border rounded-xl px-3 py-3 dark:border-navy-500 flex gap-4 items-center"
+                    >
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5C30.7696 0.5 39.5 9.23045 39.5 20Z"
+                          fill="#23324D"
+                          stroke="#A7A7A7"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M10 14.5348V25.8599C10 26.4761 10.451 26.9754 11.0723 26.9754H28.7471C29.3677 26.9754 29.8194 26.4703 29.8194 25.8599V14.5348C29.8194 13.8587 29.4155 13.3335 28.7471 13.3335H11.0723C10.3781 13.3335 10 13.8716 10 14.5348ZM11.6297 15.5212C11.6297 15.2483 11.7948 15.0922 12.0587 15.0922C12.2219 15.0922 18.6445 19.1619 19.0335 19.4006L20.0387 20.0258C20.3574 19.8122 20.6774 19.6296 21.0077 19.4083C21.6819 18.9774 27.6806 15.0922 27.8458 15.0922C28.1103 15.0922 28.2748 15.2483 28.2748 15.5212C28.2748 15.8103 27.7181 16.0974 27.3555 16.3187C25.0774 17.707 22.8 19.2206 20.5445 20.6606C20.4129 20.7496 20.1581 20.9399 19.9671 20.9109C19.7542 20.878 13.2187 16.6793 12.0297 15.9799C11.851 15.8748 11.6297 15.7787 11.6297 15.5212Z"
+                          fill="#A7A7A7"
+                        />
+                      </svg>
+
+                      <span>amine@teleman.ai</span>
+                    </div>
+                    <div
+                      class="border rounded-xl px-3 py-3 dark:border-navy-500 flex gap-4 items-center"
+                    >
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_130_654)">
+                          <path
+                            d="M0.5 20C0.5 9.22989 9.22989 0.5 20 0.5C30.7701 0.5 39.5 9.22989 39.5 20C39.5 30.7689 30.7701 39.5 20 39.5C9.22991 39.5 0.5 30.7689 0.5 20Z"
+                            stroke="#A7A7A7"
+                          />
+                          <path
+                            d="M27.1996 21.7605L24.8359 23.6079L29.3621 29.399L31.7258 27.5516L27.1996 21.7605Z"
+                            fill="#A7A7A7"
+                          />
+                          <path
+                            d="M28.1412 30.3549L23.615 24.5636C23.615 24.5636 20.6637 23.8724 18.5612 21.1836C16.46 18.4949 16.5025 15.4636 16.5025 15.4636L11.9762 9.67236C11.9762 9.67236 7.68746 15.8161 14.415 24.4236C21.1425 33.0311 28.1412 30.3549 28.1412 30.3549Z"
+                            fill="#A7A7A7"
+                          />
+                          <path
+                            d="M15.5597 6.87037L13.196 8.71777L17.7222 14.5088L20.0859 12.6614L15.5597 6.87037Z"
+                            fill="#A7A7A7"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_130_654">
+                            <rect width="40" height="40" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+
+                      <span>+212 60000000</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  x-show="activeTab === 'tabSentiment'"
+                  x-transition:enter="transition-all duration-500 easy-in-out"
+                  x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                  x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                >
+                  <div class="flex justify-center items-center h-16">
+                    <p class="text-center">No Data Available</p>
+                  </div>
+                </div>
+                <div
+                  x-show="activeTab === 'tabReports'"
+                  x-transition:enter="transition-all duration-500 easy-in-out"
+                  x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                  x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                >
+                  <div class="flex justify-center items-center h-16">
+                    <p class="text-center">No Data Available</p>
+                  </div>
+                </div>
+                <div
+                  x-show="activeTab === 'tabSearch'"
+                  x-transition:enter="transition-all duration-500 easy-in-out"
+                  x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                  x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                >
+                  <div>
+                    <label class="block">
+                      <span class="relative mt-1.5 flex">
+                        <input
+                          class="form-input peer pl-9 rounded-lg bg-slate-150 px-3 py-2 ring-primary/50 placeholder:text-slate-400 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:ring-accent/50 dark:placeholder:text-navy-300 dark:hover:bg-navy-900 dark:focus:bg-navy-900"
+                          placeholder="Search message here..."
+                          type="text"
+                          x-input-mask="{numericOnly: true, blocks: [0, 3, 3, 4], delimiters: ['(', ') ', '-']}"
+                        />
+                        <span
+                          class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent"
+                        >
+                          <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 18 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8.625 15.75C12.56 15.75 15.75 12.56 15.75 8.625C15.75 4.68997 12.56 1.5 8.625 1.5C4.68997 1.5 1.5 4.68997 1.5 8.625C1.5 12.56 4.68997 15.75 8.625 15.75Z"
+                              stroke="white"
+                              stroke-opacity="0.25"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M16.5 16.5L15 15"
+                              stroke="white"
+                              stroke-opacity="0.25"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                    <div class="my-4 flex items-center space-x-3">
+                      <div
+                        class="h-px flex-1 bg-slate-200 dark:bg-navy-500"
+                      ></div>
+                      <p>26 April, 2023</p>
+                      <div
+                        class="h-px flex-1 bg-slate-200 dark:bg-navy-500"
+                      ></div>
+                    </div>
+                    <div class="space-y-2.5">
+                      <div class="flex justify-between gap-4 py-2">
+                        <div class="avatar h-8 w-8">
+                          <img
+                            class="rounded-full"
+                            src="images/100x100.png"
+                            alt="avatar"
+                          />
+                        </div>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Etiam cursus arcu tellus, eu pulvinar est.
+                        </p>
+                        <p class="text-xs">12:40</p>
+                      </div>
+                      <div class="flex justify-between gap-4 py-2">
+                        <div class="avatar h-8 w-8">
+                          <img
+                            class="rounded-full"
+                            src="images/100x100.png"
+                            alt="avatar"
+                          />
+                        </div>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Etiam cursus arcu tellus, eu pulvinar est.
+                        </p>
+                        <p class="text-xs">12:40</p>
+                      </div>
+                      <div class="flex justify-between gap-4 py-2">
+                        <div class="avatar h-8 w-8">
+                          <img
+                            class="rounded-full"
+                            src="images/100x100.png"
+                            alt="avatar"
+                          />
+                        </div>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Etiam cursus arcu tellus, eu pulvinar est.
+                        </p>
+                        <p class="text-xs">12:40</p>
+                      </div>
+                      <div class="flex justify-between gap-4 py-2">
+                        <div class="avatar h-8 w-8">
+                          <img
+                            class="rounded-full"
+                            src="images/100x100.png"
+                            alt="avatar"
+                          />
+                        </div>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Etiam cursus arcu tellus, eu pulvinar est.
+                        </p>
+                        <p class="text-xs">12:40</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  x-show="activeTab === 'tabQuality'"
+                  x-transition:enter="transition-all duration-500 easy-in-out"
+                  x-transition:enter-start="opacity-0 [transform:translate3d(1rem,0,0)]"
+                  x-transition:enter-end="opacity-100 [transform:translate3d(0,0,0)]"
+                >
+                  <div class="flex justify-center items-center h-16">
+                    <p class="text-center">No Data Available</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- 
+        This is a place for Alpine.js Teleport feature 
+        @see https://alpinejs.dev/directives/teleport
+      -->
+    <div id="x-teleport-target"></div>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => Alpine.start())
+    </script>
+  </body>
+</html>
