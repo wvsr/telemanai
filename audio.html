@@ -1892,11 +1892,18 @@
               </p>
             </div>
             <div>
-              <button
-                class="btn h-11 bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
-              >
-                Procces
-              </button>
+              <div x-data="{ showSpinner: false }">
+                <button
+                  class="btn h-11 bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90 flex gap-3"
+                  x-on:click="showSpinner = true; setTimeout(() => { showSpinner = false }, 3000);"
+                >
+                  <span>Process</span>
+                  <div
+                    x-show="showSpinner"
+                    class="spinner h-5 w-5 animate-spin rounded-full border-[3px] border-white border-r-transparent dark:border-r-transparent"
+                  ></div>
+                </button>
+              </div>
             </div>
           </div>
           <div
