@@ -58,13 +58,37 @@
         margin-top: -5px;
         margin-bottom: -5px;
       }
-      .bg-purple {
-        background: #7d6ced;
-      }
       .slider::-webkit-slider-runnable-track {
         height: 8px;
         border-radius: 20px;
         background-color: #7d6ced;
+      }
+      .music-player::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 26px;
+        height: 26px;
+        padding: 9px;
+        border-radius: 50%;
+        background-color: white;
+        margin-top: -1px;
+        margin-bottom: -5px;
+      }
+      .music-player::-webkit-slider-runnable-track {
+        height: 17px;
+        border-radius: 20px;
+        background-color: #7d6ced;
+      }
+      .music-player-bg {
+        width: full;
+        height: 17px;
+        border-radius: 20px;
+      }
+      .music-player {
+        width: 100%;
+      }
+      .bg-purple {
+        background: #7d6ced;
       }
 
       .mini-slider::-webkit-slider-thumb {
@@ -2960,8 +2984,19 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-                <div class="progress h-3 bg-slate-150 dark:bg-navy-500">
-                  <div class="w-5/12 rounded-full bg-primary bg-purple"></div>
+                <div>
+                  <label class="block">
+                    <div class="music-player-bg bg-slate-150 dark:bg-navy-500">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="50"
+                        class="music-player"
+                        style="max-width: 40%"
+                      />
+                    </div>
+                  </label>
                 </div>
               </div>
               <p class="text-sm">
